@@ -55,6 +55,7 @@ class App extends Component {
                   <SingleColorPalette
                     palette={singleColorPaletts}
                     paletteId={paletteId}
+                    emoji={paletteFound.emoji}
                   />
                 );
               } else {
