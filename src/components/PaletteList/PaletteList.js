@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import MiniPalette from "../MiniPalette/MiniPalette";
 
 export default class PaletteList extends Component {
   render() {
@@ -12,6 +13,7 @@ export default class PaletteList extends Component {
     return (
       <div>
         <h1>React Colors</h1>
+        <MiniPalette />
         {allPalettes}
       </div>
     );
