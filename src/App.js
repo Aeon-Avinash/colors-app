@@ -38,6 +38,13 @@ class App extends Component {
               }
             }}
           />
+          <Route
+            exact
+            path="/palette/:paletteId/:colorId"
+            render={routeProps => {
+              return <h1>all Shades of one color</h1>;
+            }}
+          />
         </Switch>
       </div>
     );
