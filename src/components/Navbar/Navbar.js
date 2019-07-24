@@ -13,7 +13,7 @@ export default class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      snackbarOpen: true
+      snackbarOpen: false
     };
     this.handleLevel = this.handleLevel.bind(this);
     this.handleFormat = this.handleFormat.bind(this);
