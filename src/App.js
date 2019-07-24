@@ -43,7 +43,23 @@ class App extends Component {
             exact
             path="/palette/:paletteId/:colorId"
             render={routeProps => {
-              return <SingleColorPalette />;
+              const { paletteId, colorId } = routeProps.match.params;
+              const paletteFound = this.findPalette(paletteId);
+              const allPalettes = generatePalette(paletteFound).colors;
+              const singleColorPaletts = Object.keys(allPalettes).map(shade =>
+                allPalettes[shade].find(color => color.id === colorId)
+              );
+
+              if (paletteFound && singleColorPaletts) {
+                return (
+                  <SingleColorPalette
+                    palette={singleColorPaletts}
+                    paletteId={paletteId}
+                  />
+                );
+              } else {
+                return <h1>Palette not found!</h1>;
+              }
             }}
           />
         </Switch>

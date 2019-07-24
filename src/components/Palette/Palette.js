@@ -32,6 +32,7 @@ export default class Palette extends Component {
         colorId={color.id}
         background={color[format]}
         name={color.name}
+        showMoreLink={true}
       />
     ));
     return (
