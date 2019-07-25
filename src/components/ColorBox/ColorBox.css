@@ -49,6 +49,14 @@
   text-transform: uppercase;
 }
 
+.ColorBox .light-text {
+  color: white;
+}
+
+.ColorBox .dark-text {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .see-more {
   position: absolute;
   right: 0px;
