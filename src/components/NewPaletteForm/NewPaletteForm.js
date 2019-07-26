@@ -75,10 +75,14 @@ class NewPaletteForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      currentColor: "teal",
+      colors: ["purple", "#675637"]
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
+    this.setCurrentColor = this.setCurrentColor.bind(this);
+    this.addNewColor = this.addNewColor.bind(this);
   }
   handleDrawerOpen() {
     this.setState({ open: true });
@@ -86,10 +90,18 @@ class NewPaletteForm extends Component {
   handleDrawerClose() {
     this.setState({ open: false });
   }
+  setCurrentColor(newColor) {
+    this.setState({ currentColor: newColor.hex });
+  }
+  addNewColor() {
+    this.setState(prevState => ({
+      colors: [...prevState.colors, this.state.currentColor]
+    }));
+  }
 
   render() {
     const { classes } = this.props;
-    const { open } = this.state;
+    const { open, currentColor } = this.state;
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -140,10 +152,16 @@ class NewPaletteForm extends Component {
           </div>
 
           <ChromePicker
-            color="blue"
-            onChangeComplete={newColor => console.log(newColor)}
+            color={currentColor}
+            onChangeComplete={this.setCurrentColor}
           />
-          <Button variant="contained" size="large" color="primary">
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            style={{ backgroundColor: currentColor }}
+            onClick={this.addNewColor}
+          >
             Add Color
           </Button>
         </Drawer>
@@ -153,6 +171,21 @@ class NewPaletteForm extends Component {
           })}
         >
           <div className={classes.drawerHeader} />
+          <ul style={{ display: "flex", flexFlow: "row wrap" }}>
+            {this.state.colors.map(color => (
+              <div
+                key={color}
+                style={{
+                  backgroundColor: color,
+                  color: "white",
+                  height: "200px",
+                  width: "200px"
+                }}
+              >
+                {color}
+              </div>
+            ))}
+          </ul>
         </main>
       </div>
     );
