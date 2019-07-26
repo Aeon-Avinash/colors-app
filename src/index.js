@@ -1,21 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import { create } from "jss";
-import jssExtend from "jss-plugin-extend";
-import { StylesProvider, jssPreset } from "@material-ui/styles";
+// import { create } from "jss";
+// import jssExtend from "jss-plugin-extend";
+import { ThemeProvider } from "@material-ui/styles";
+// import { StylesProvider, jssPreset } from "@material-ui/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
 import "./index.css";
 import App from "./App";
 
-const jss = create({
-  plugins: [jssExtend(), ...jssPreset().plugins]
-});
+const theme = createMuiTheme();
+
+// const jss = create({
+//   plugins: [...jssPreset().plugins, jssExtend()]
+// });
 
 ReactDOM.render(
-  <StylesProvider jss={jss}>
+  // <StylesProvider jss={jss}>
+  <ThemeProvider theme={theme}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </StylesProvider>,
+  </ThemeProvider>,
+  // </StylesProvider>
   document.getElementById("root")
 );
