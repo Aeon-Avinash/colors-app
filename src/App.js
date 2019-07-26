@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-import "./App.css";
 import PaletteList from "./components/PaletteList/PaletteList";
 import Palette from "./components/Palette/Palette";
 import SingleColorPalette from "./components/SingleColorPalette/SingleColorPalette";
