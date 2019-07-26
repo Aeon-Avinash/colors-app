@@ -8,11 +8,18 @@
   height: 90%;
 }
 
-.go-back.ColorBox {
+.go-back {
   background-color: black;
+  width: 20%;
+  height: 50%;
+  margin: 0 auto;
+  margin-bottom: -6px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
 }
 
-.go-back.ColorBox a {
+.go-back a {
   text-decoration: none;
 }
 

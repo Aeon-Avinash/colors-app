@@ -29,15 +29,15 @@ class SingleColorPalette extends Component {
         colorId={color.id}
         background={color[format]}
         name={color.name}
-        showMoreLink={false}
+        showingFullPalette={true}
       />
     ));
     return (
-      <div className="SingleColorPalette Palette">
+      <div className="Palette">
         <Navbar format={format} changeFormat={this.handleFormatChange} />
         <div className="Palette-colors">
           {colorBoxes}
-          <div className="go-back ColorBox">
+          <div className="go-back">
             <Link className="back-button" to={`/palette/${paletteId}`}>
               Go Back
             </Link>
