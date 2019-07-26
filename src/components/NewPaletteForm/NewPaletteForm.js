@@ -12,14 +12,18 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/Button";
 import { ChromePicker } from "react-color";
+import seedColors from "../../seedColors";
+import DraggableColorBox from "../DraggableColorBox/DraggableColorBox";
 
 const drawerWidth = 400;
+const appBarHeight = 64;
 
 const styles = theme => ({
   root: {
     display: "flex"
   },
   appBar: {
+    height: `${appBarHeight}px`,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
@@ -55,6 +59,7 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
+    height: `calc(100vh - ${appBarHeight}px)`,
     padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
@@ -77,7 +82,7 @@ class NewPaletteForm extends Component {
     this.state = {
       open: false,
       currentColor: "teal",
-      colors: ["purple", "#675637"]
+      colors: [...seedColors[0].colors]
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
@@ -94,8 +99,12 @@ class NewPaletteForm extends Component {
     this.setState({ currentColor: newColor.hex });
   }
   addNewColor() {
+    const { currentColor } = this.state;
     this.setState(prevState => ({
-      colors: [...prevState.colors, this.state.currentColor]
+      colors: [
+        ...prevState.colors,
+        { color: currentColor, name: `new-${currentColor}` }
+      ]
     }));
   }
 
@@ -171,21 +180,9 @@ class NewPaletteForm extends Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          <ul style={{ display: "flex", flexFlow: "row wrap" }}>
-            {this.state.colors.map(color => (
-              <div
-                key={color}
-                style={{
-                  backgroundColor: color,
-                  color: "white",
-                  height: "200px",
-                  width: "200px"
-                }}
-              >
-                {color}
-              </div>
-            ))}
-          </ul>
+          {this.state.colors.map((color, i) => (
+            <DraggableColorBox key={i} color={color.color} name={color.name} />
+          ))}
         </main>
       </div>
     );
