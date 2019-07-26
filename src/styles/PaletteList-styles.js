@@ -18,7 +18,8 @@ const styles = {
     color: "white",
     display: "flex",
     width: "100%",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   palettes: {
     boxSizing: "border-box",
@@ -26,6 +27,15 @@ const styles = {
     display: "grid",
     gridTemplateColumns: "repeat(3, 30%)",
     gridGap: "5%"
+  },
+  newLink: {
+    color: "white",
+    textDecoration: "none",
+    borderBottom: "1px solid grey",
+    transition: "all ease-in-out 1s",
+    "&:hover": {
+      borderColor: "transparent"
+    }
   }
 };
 export default styles;
