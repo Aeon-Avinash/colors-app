@@ -16,10 +16,20 @@ import styles from "../../styles/NavNewPaletteForm-styles";
 class NewPaletteFormNav extends Component {
   constructor(props) {
     super(props);
-    this.someFn = this.someFn.bind(this);
+    this.state = {
+      showFormDialog: false
+    };
+    this.handleOpenDialog = this.handleOpenDialog.bind(this);
+    this.handleCloseDialog = this.handleCloseDialog.bind(this);
   }
 
-  someFn() {}
+  handleOpenDialog() {
+    this.setState({ showFormDialog: true });
+  }
+
+  handleCloseDialog() {
+    this.setState({ showFormDialog: false });
+  }
 
   render() {
     const {
@@ -56,19 +66,30 @@ class NewPaletteFormNav extends Component {
             </Typography>
           </Toolbar>
           <div className={classes.appButtons}>
-            <MetaNewPaletteForm
-              handleSubmitPalette={handleSubmitPalette}
-              handleNameChange={handleNameChange}
-              newPaletteName={newPaletteName}
-              palettes={palettes}
-            />
             <Link to="/">
               <Button variant="contained" color="secondary">
                 Go Back
               </Button>
             </Link>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleOpenDialog}
+            >
+              Save Your New Palette
+            </Button>
           </div>
         </AppBar>
+        {this.state.showFormDialog && (
+          <MetaNewPaletteForm
+            showFormDialog={this.state.showFormDialog}
+            handleCloseFormDialog={this.handleCloseDialog}
+            handleSubmitPalette={handleSubmitPalette}
+            handleNameChange={handleNameChange}
+            newPaletteName={newPaletteName}
+            palettes={palettes}
+          />
+        )}
       </>
     );
   }

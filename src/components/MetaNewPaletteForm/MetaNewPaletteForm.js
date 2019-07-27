@@ -11,10 +11,8 @@ class MetaNewPaletteForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dialogOpen: false
+      dialogOpen: this.props.showFormDialog
     };
-    this.handleClickOpen = this.handleClickOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
@@ -30,49 +28,34 @@ class MetaNewPaletteForm extends Component {
     });
   }
 
-  handleClickOpen() {
-    this.setState({ dialogOpen: true });
-  }
-
-  handleClose() {
-    this.setState({ dialogOpen: false });
-  }
-
   render() {
     const { dialogOpen } = this.state;
     const {
       handleSubmitPalette,
       handleNameChange,
-      newPaletteName
+      newPaletteName,
+      handleCloseFormDialog
     } = this.props;
     return (
-      <div>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={this.handleClickOpen}
+      <Dialog
+        open={dialogOpen}
+        onClose={handleCloseFormDialog}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Choose a Palette Name</DialogTitle>
+        <ValidatorForm
+          ref="form"
+          onSubmit={handleSubmitPalette}
+          onError={errors => console.log(errors)}
         >
-          Save Your New Palette
-        </Button>
-        <Dialog
-          open={dialogOpen}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address
-              here. We will send updates occasionally.
+              Please enter a name for your baeutiful new palette. Make sure it's
+              unique.
             </DialogContentText>
-          </DialogContent>
-
-          <ValidatorForm
-            ref="form"
-            onSubmit={handleSubmitPalette}
-            onError={errors => console.log(errors)}
-          >
             <TextValidator
+              fullWidth
+              margin="normal"
               label="Palette Name"
               onChange={handleNameChange}
               name="newPaletteName"
@@ -83,21 +66,18 @@ class MetaNewPaletteForm extends Component {
                 "Palette name is not unique"
               ]}
             />
+          </DialogContent>
+
+          <DialogActions>
+            <Button onClick={handleCloseFormDialog} color="primary">
+              Cancel
+            </Button>
             <Button variant="contained" color="primary" type="submit">
               Save Palette
             </Button>
-          </ValidatorForm>
-
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleClose} color="primary">
-              Subscribe
-            </Button>
           </DialogActions>
-        </Dialog>
-      </div>
+        </ValidatorForm>
+      </Dialog>
     );
   }
 }
