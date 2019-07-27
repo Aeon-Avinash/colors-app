@@ -102,6 +102,12 @@ class NewPaletteForm extends Component {
 
   componentDidMount() {
     this.setState({ currentColor: this.generateUniqueRandomColor() });
+    ValidatorForm.addValidationRule("ifPaletteNotFull", value => {
+      if (this.state.colors.length < 20) {
+        return true;
+      }
+      return false;
+    });
     ValidatorForm.addValidationRule("isColorUnique", value => {
       if (
         !this.state.colors.find(
@@ -283,8 +289,14 @@ class NewPaletteForm extends Component {
               onChange={this.handleNameChange}
               name="newColorName"
               value={newColorName}
-              validators={["required", "isColorUnique", "isNameUnique"]}
+              validators={[
+                "ifPaletteNotFull",
+                "required",
+                "isColorUnique",
+                "isNameUnique"
+              ]}
               errorMessages={[
+                "Palette is full. Remove colors to add new",
                 "this field is required",
                 "color already used",
                 "color name is not unique"
