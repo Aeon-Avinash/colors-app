@@ -12,13 +12,13 @@ const styles = theme => ({
   },
   drawerHeader: {
     display: "flex",
+    width: "100%",
     alignItems: "center",
     padding: "0 8px",
     ...theme.mixins.toolbar,
     justifyContent: "flex-end"
   },
   drawerContainer: {
-    // margin: "0 auto",
     width: "90%",
     height: "100%",
     display: "flex",
