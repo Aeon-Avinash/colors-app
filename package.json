@@ -9,6 +9,7 @@
     "array-move": "^2.1.0",
     "chroma-js": "^2.0.4",
     "clsx": "^1.0.4",
+    "emoji-mart": "^2.11.1",
     "jss": "^9.8.7",
     "jss-plugin-extend": "^10.0.0-alpha.7",
     "rc-slider": "^8.6.13",

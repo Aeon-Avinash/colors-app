@@ -96,12 +96,12 @@ class NewPaletteForm extends Component {
     });
   }
 
-  handleSubmitPalette() {
+  handleSubmitPalette(emojiVal) {
     const newPaletteName = this.state.newPaletteName || "Some Palette Name";
     const newPalette = {
       paletteName: newPaletteName,
       id: newPaletteName.toLowerCase().replace(/ /g, "-"),
-      emoji: "someEmoji",
+      emoji: emojiVal.native,
       colors: this.state.colors
     };
     this.props.savePalette(newPalette);
@@ -138,6 +138,7 @@ class NewPaletteForm extends Component {
     const { classes, palettes } = this.props;
     const {
       openDrawer,
+      dialogStage,
       colors,
       currentColor,
       newColorName,
@@ -147,6 +148,7 @@ class NewPaletteForm extends Component {
       <div className={classes.root}>
         <NavNewPaletteForm
           open={openDrawer}
+          stage={dialogStage}
           newPaletteName={newPaletteName}
           handleNameChange={this.handleNameChange}
           handleDrawerOpen={this.handleDrawerOpen}

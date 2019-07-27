@@ -17,10 +17,12 @@ class NewPaletteFormNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showFormDialog: false
+      showFormDialog: false,
+      showEmojiDialog: false
     };
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
+    this.shiftDialogStage = this.shiftDialogStage.bind(this);
   }
 
   handleOpenDialog() {
@@ -28,13 +30,24 @@ class NewPaletteFormNav extends Component {
   }
 
   handleCloseDialog() {
-    this.setState({ showFormDialog: false });
+    this.setState({
+      showFormDialog: false,
+      showEmojiDialog: false
+    });
+  }
+
+  shiftDialogStage() {
+    this.setState({
+      showFormDialog: false,
+      showEmojiDialog: true
+    });
   }
 
   render() {
     const {
       classes,
       open,
+      stage,
       handleDrawerOpen,
       newPaletteName,
       handleSubmitPalette,
@@ -80,11 +93,14 @@ class NewPaletteFormNav extends Component {
             </Button>
           </div>
         </AppBar>
-        {this.state.showFormDialog && (
+        {(this.state.showFormDialog || this.state.showEmojiDialog) && (
           <MetaNewPaletteForm
             showFormDialog={this.state.showFormDialog}
+            showEmojiDialog={this.state.showEmojiDialog}
+            stage={stage}
             handleCloseFormDialog={this.handleCloseDialog}
             handleSubmitPalette={handleSubmitPalette}
+            showEmojiPicker={this.shiftDialogStage}
             handleNameChange={handleNameChange}
             newPaletteName={newPaletteName}
             palettes={palettes}
