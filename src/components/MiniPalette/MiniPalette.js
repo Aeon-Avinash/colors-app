@@ -1,30 +1,45 @@
-import React from "react";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
 import styles from "../../styles/MiniPalette-styles";
 
-const MiniPalette = ({
-  classes,
-  id,
-  paletteName,
-  emoji,
-  colors,
-  handleClick
-}) => {
-  const miniColorBoxes = colors.map(color => (
-    <div
-      key={color.name}
-      className={classes.miniColor}
-      style={{ backgroundColor: color.color }}
-    />
-  ));
-  return (
-    <div className={classes.root} onClick={() => handleClick(id)}>
-      <div className={classes.colors}>{miniColorBoxes}</div>
-      <h5 className={classes.title}>
-        {paletteName} <span className={classes.emoji}>{emoji}</span>
-      </h5>
-    </div>
-  );
-};
+class MiniPalette extends Component {
+  constructor(props) {
+    super(props);
+    this.miniPaletteClicked = this.miniPaletteClicked.bind(this);
+    this.miniPaletteDeleted = this.miniPaletteDeleted.bind(this);
+  }
+
+  miniPaletteClicked() {
+    this.props.handleClick(this.props.id);
+  }
+
+  miniPaletteDeleted(e) {
+    e.stopPropagation();
+    this.props.handleDelete(this.props.id);
+  }
+  render() {
+    const { classes, paletteName, emoji, colors } = this.props;
+    const miniColorBoxes = colors.map(color => (
+      <div
+        key={color.name}
+        className={classes.miniColor}
+        style={{ backgroundColor: color.color }}
+      />
+    ));
+    return (
+      <div className={classes.root} onClick={this.miniPaletteClicked}>
+        <DeleteIcon
+          className={classes.deleteIcon}
+          onClick={this.miniPaletteDeleted}
+        />
+        <div className={classes.colors}>{miniColorBoxes}</div>
+        <h5 className={classes.title}>
+          {paletteName} <span className={classes.emoji}>{emoji}</span>
+        </h5>
+      </div>
+    );
+  }
+}
 
 export default withStyles(styles)(MiniPalette);

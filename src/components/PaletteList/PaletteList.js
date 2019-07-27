@@ -15,12 +15,13 @@ class PaletteList extends Component {
   }
 
   render() {
-    const { palettes, classes } = this.props;
+    const { palettes, handleDelete, classes } = this.props;
     const allPalettes = palettes.map(palette => (
       <MiniPalette
         {...palette}
         key={palette.id}
         handleClick={this.goToPalette}
+        handleDelete={handleDelete}
       />
     ));
     return (
