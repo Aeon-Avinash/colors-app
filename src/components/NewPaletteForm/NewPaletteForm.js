@@ -12,6 +12,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/Button";
 import { ChromePicker } from "react-color";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import seedColors from "../../seedColors";
 import DraggableColorBox from "../DraggableColorBox/DraggableColorBox";
 
@@ -27,7 +28,12 @@ const styles = theme => ({
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    })
+    }).AppBar,
+    display: "flex"
+  },
+  appButtons: {
+    marginLeft: "auto",
+    display: "flex"
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -81,14 +87,44 @@ class NewPaletteForm extends Component {
     super(props);
     this.state = {
       open: false,
-      currentColor: "teal",
-      colors: [...seedColors[0].colors]
+      currentColor: "#009688",
+      colors: [...seedColors[0].colors],
+      newColorName: "",
+      newPaletteName: ""
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
     this.setCurrentColor = this.setCurrentColor.bind(this);
     this.addNewColor = this.addNewColor.bind(this);
+    this.handleSubmitPalette = this.handleSubmitPalette.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
   }
+
+  componentDidMount() {
+    this.setState({ currentColor: this.generateUniqueRandomColor() });
+    ValidatorForm.addValidationRule("isColorUnique", value => {
+      if (
+        !this.state.colors.find(
+          color =>
+            color.color.toLowerCase() === this.state.currentColor.toLowerCase()
+        )
+      ) {
+        return true;
+      }
+      return false;
+    });
+    ValidatorForm.addValidationRule("isNameUnique", value => {
+      if (
+        !this.state.colors.find(
+          color => color.name.toLowerCase() === value.toLowerCase()
+        )
+      ) {
+        return true;
+      }
+      return false;
+    });
+  }
+
   handleDrawerOpen() {
     this.setState({ open: true });
   }
@@ -98,24 +134,59 @@ class NewPaletteForm extends Component {
   setCurrentColor(newColor) {
     this.setState({ currentColor: newColor.hex });
   }
+  handleNameChange(e) {
+    this.setState({
+      newColorName: e.target.value
+    });
+  }
   addNewColor() {
-    const { currentColor } = this.state;
+    const { currentColor, newColorName } = this.state;
     this.setState(prevState => ({
       colors: [
         ...prevState.colors,
-        { color: currentColor, name: `new-${currentColor}` }
-      ]
+        { color: currentColor, name: newColorName }
+      ],
+      newColorName: "",
+      currentColor: this.generateUniqueRandomColor()
     }));
+  }
+  handleSubmitPalette() {
+    const newPaletteName = this.state.newPaletteName || "Some Palette Name";
+    const newPalette = {
+      paletteName: newPaletteName,
+      id: newPaletteName.toLowerCase().replace(/ /g, "-"),
+      emoji: "someEmoji",
+      colors: this.state.colors
+    };
+    this.props.savePalette(newPalette);
+    this.props.history.push("/");
+  }
+  generateUniqueRandomColor() {
+    const allColors = this.state.colors.map(color => color.color.toUpperCase());
+    let newColor;
+    do {
+      newColor = "#";
+      const hexArr = "0123456789ABCDEF";
+      for (let i = 0; i < 6; i++) {
+        const rnd = Math.floor(Math.random() * hexArr.length);
+        newColor += hexArr[rnd];
+      }
+      if (allColors.includes(newColor)) {
+        newColor = undefined;
+      }
+    } while (!newColor);
+    return newColor;
   }
 
   render() {
     const { classes } = this.props;
-    const { open, currentColor } = this.state;
+    const { open, currentColor, newColorName } = this.state;
     return (
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
           position="fixed"
+          color="default"
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open
           })}
@@ -133,6 +204,18 @@ class NewPaletteForm extends Component {
             <Typography variant="h6" noWrap>
               Persistent drawer
             </Typography>
+            <div className={classes.appButtons}>
+              <Button variant="contained" color="secondary">
+                Go Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSubmitPalette}
+              >
+                Save Palette
+              </Button>
+            </div>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -164,15 +247,33 @@ class NewPaletteForm extends Component {
             color={currentColor}
             onChangeComplete={this.setCurrentColor}
           />
-          <Button
-            variant="contained"
-            size="large"
-            color="primary"
-            style={{ backgroundColor: currentColor }}
-            onClick={this.addNewColor}
+          <ValidatorForm
+            ref="form"
+            onSubmit={this.addNewColor}
+            onError={errors => console.log(errors)}
           >
-            Add Color
-          </Button>
+            <TextValidator
+              label="Color Name"
+              onChange={this.handleNameChange}
+              name="email"
+              value={newColorName}
+              validators={["required", "isColorUnique", "isNameUnique"]}
+              errorMessages={[
+                "this field is required",
+                "color already used",
+                "color name is not unique"
+              ]}
+            />
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              style={{ backgroundColor: currentColor }}
+              type="submit"
+            >
+              Add Color
+            </Button>
+          </ValidatorForm>
         </Drawer>
         <main
           className={clsx(classes.content, {

@@ -4,7 +4,8 @@ const styles = {
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "center",
-    backgroundColor: "blue"
+    backgroundColor: "blue",
+    overflow: "auto"
   },
   container: {
     width: "50%",
