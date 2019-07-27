@@ -14,7 +14,6 @@ import Button from "@material-ui/core/Button";
 import { ChromePicker } from "react-color";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import arrayMove from "array-move";
-import seedColors from "../../seedColors";
 import DraggableColorList from "../../hocs/DraggableColorList/DraggableColorList";
 
 const drawerWidth = 400;
@@ -84,12 +83,15 @@ const styles = theme => ({
 });
 
 class NewPaletteForm extends Component {
+  static defaultProps = {
+    maxColors: 20
+  };
   constructor(props) {
     super(props);
     this.state = {
       open: false,
       currentColor: "#009688",
-      colors: [...seedColors[0].colors],
+      colors: this.props.palettes[0].colors,
       newColorName: "",
       newPaletteName: ""
     };
@@ -97,7 +99,9 @@ class NewPaletteForm extends Component {
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
     this.setCurrentColor = this.setCurrentColor.bind(this);
     this.addNewColor = this.addNewColor.bind(this);
+    this.addRandomColor = this.addRandomColor.bind(this);
     this.handleDeleteColor = this.handleDeleteColor.bind(this);
+    this.clearColors = this.clearColors.bind(this);
     this.handleSubmitPalette = this.handleSubmitPalette.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.onSortEnd = this.onSortEnd.bind(this);
@@ -169,11 +173,34 @@ class NewPaletteForm extends Component {
       currentColor: this.generateUniqueRandomColor()
     }));
   }
+  addRandomColor() {
+    let newColor;
+    const currentColors = this.state.colors.map(color =>
+      color.color.toUpperCase()
+    );
+    const allColors = this.props.palettes.map(p => p.colors).flat();
+    do {
+      const rnd = Math.floor(Math.random() * allColors.length);
+      if (!currentColors.includes(allColors[rnd].color.toUpperCase())) {
+        newColor = allColors[rnd];
+      }
+    } while (!newColor);
+    this.setState(prevState => ({
+      colors: [...prevState.colors, newColor],
+      newColorName: "",
+      currentColor: this.generateUniqueRandomColor()
+    }));
+  }
   handleDeleteColor(colorName) {
     this.setState({
       colors: this.state.colors.filter(
         color => color.name.toLowerCase() !== colorName.toLowerCase()
       )
+    });
+  }
+  clearColors() {
+    this.setState({
+      colors: []
     });
   }
   handleSubmitPalette() {
@@ -213,7 +240,7 @@ class NewPaletteForm extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, maxColors } = this.props;
     const {
       open,
       colors,
@@ -221,6 +248,7 @@ class NewPaletteForm extends Component {
       newColorName,
       newPaletteName
     } = this.state;
+    const paletteIsFull = colors.length >= maxColors;
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -288,10 +316,19 @@ class NewPaletteForm extends Component {
           <Divider />
           <Typography variant="h4">Design Your Palette</Typography>
           <div>
-            <Button variant="contained" color="secondary">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.clearColors}
+            >
               Clear Palette
             </Button>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.addRandomColor}
+              disabled={paletteIsFull}
+            >
               Random Color
             </Button>
           </div>
@@ -327,10 +364,13 @@ class NewPaletteForm extends Component {
               variant="contained"
               size="large"
               color="primary"
-              style={{ backgroundColor: currentColor }}
+              style={{
+                backgroundColor: !paletteIsFull ? currentColor : "#e0e0e0"
+              }}
+              disabled={paletteIsFull}
               type="submit"
             >
-              Add Color
+              {!paletteIsFull ? "Add Color" : "Palette Full"}
             </Button>
           </ValidatorForm>
         </Drawer>
