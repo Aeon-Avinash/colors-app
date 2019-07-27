@@ -41,6 +41,7 @@ class App extends Component {
               <NewPaletteForm
                 {...routeProps}
                 savePalette={this.savePaletteToList}
+                palettes={this.state.palettes}
               />
             )}
           />
