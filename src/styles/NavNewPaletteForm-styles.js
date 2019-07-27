@@ -1,8 +1,8 @@
-import { drawerWidth, appBarHeight } from "./styleConstants";
+import { DRAWER_WIDTH, APPBAR_HEIGHT } from "./styleConstants";
 
 const styles = theme => ({
   appBar: {
-    height: `${appBarHeight}px`,
+    height: `${APPBAR_HEIGHT}px`,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
@@ -22,8 +22,8 @@ const styles = theme => ({
     }
   },
   appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    marginLeft: DRAWER_WIDTH,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen

@@ -1,2 +1,2 @@
-export const drawerWidth = 400;
-export const appBarHeight = 64;
+export const DRAWER_WIDTH = 400;
+export const APPBAR_HEIGHT = 64;

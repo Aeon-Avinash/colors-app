@@ -1,4 +1,4 @@
-import { drawerWidth, appBarHeight } from "./styleConstants";
+import { DRAWER_WIDTH, APPBAR_HEIGHT } from "./styleConstants";
 
 const styles = theme => ({
   root: {
@@ -13,13 +13,13 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    height: `calc(100vh - ${appBarHeight}px)`,
+    height: `calc(100vh - ${APPBAR_HEIGHT}px)`,
     padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    marginLeft: -drawerWidth
+    marginLeft: -DRAWER_WIDTH
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
