@@ -13,8 +13,9 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/Button";
 import { ChromePicker } from "react-color";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import arrayMove from "array-move";
 import seedColors from "../../seedColors";
-import DraggableColorBox from "../DraggableColorBox/DraggableColorBox";
+import DraggableColorList from "../../hocs/DraggableColorList/DraggableColorList";
 
 const drawerWidth = 400;
 const appBarHeight = 64;
@@ -99,6 +100,7 @@ class NewPaletteForm extends Component {
     this.handleDeleteColor = this.handleDeleteColor.bind(this);
     this.handleSubmitPalette = this.handleSubmitPalette.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.onSortEnd = this.onSortEnd.bind(this);
   }
 
   componentDidMount() {
@@ -204,10 +206,21 @@ class NewPaletteForm extends Component {
     } while (!newColor);
     return newColor;
   }
+  onSortEnd({ oldIndex, newIndex }) {
+    this.setState(({ colors }) => ({
+      colors: arrayMove(colors, oldIndex, newIndex)
+    }));
+  }
 
   render() {
     const { classes } = this.props;
-    const { open, currentColor, newColorName, newPaletteName } = this.state;
+    const {
+      open,
+      colors,
+      currentColor,
+      newColorName,
+      newPaletteName
+    } = this.state;
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -327,14 +340,12 @@ class NewPaletteForm extends Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          {this.state.colors.map(color => (
-            <DraggableColorBox
-              key={color.name}
-              color={color.color}
-              name={color.name}
-              deleteColor={this.handleDeleteColor}
-            />
-          ))}
+          <DraggableColorList
+            colors={colors}
+            handleDeleteColor={this.handleDeleteColor}
+            axis="xy"
+            onSortEnd={this.onSortEnd}
+          />
         </main>
       </div>
     );
