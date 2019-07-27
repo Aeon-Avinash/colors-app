@@ -96,6 +96,7 @@ class NewPaletteForm extends Component {
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
     this.setCurrentColor = this.setCurrentColor.bind(this);
     this.addNewColor = this.addNewColor.bind(this);
+    this.handleDeleteColor = this.handleDeleteColor.bind(this);
     this.handleSubmitPalette = this.handleSubmitPalette.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
   }
@@ -165,6 +166,13 @@ class NewPaletteForm extends Component {
       newColorName: "",
       currentColor: this.generateUniqueRandomColor()
     }));
+  }
+  handleDeleteColor(colorName) {
+    this.setState({
+      colors: this.state.colors.filter(
+        color => color.name.toLowerCase() !== colorName.toLowerCase()
+      )
+    });
   }
   handleSubmitPalette() {
     const newPaletteName = this.state.newPaletteName || "Some Palette Name";
@@ -319,8 +327,13 @@ class NewPaletteForm extends Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          {this.state.colors.map((color, i) => (
-            <DraggableColorBox key={i} color={color.color} name={color.name} />
+          {this.state.colors.map(color => (
+            <DraggableColorBox
+              key={color.name}
+              color={color.color}
+              name={color.name}
+              deleteColor={this.handleDeleteColor}
+            />
           ))}
         </main>
       </div>

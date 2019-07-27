@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/styles";
 import chroma from "chroma-js";
-import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 const styles = {
@@ -52,7 +51,7 @@ class DraggableColorBox extends Component {
     this.clickDelete = this.clickDelete.bind(this);
   }
   clickDelete() {
-    this.props.deleteColor(this.props.color);
+    this.props.deleteColor(this.props.name);
   }
   render() {
     const { classes, name } = this.props;
