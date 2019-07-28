@@ -5,7 +5,7 @@ const styles = {
     margin: "0.5rem 1rem",
     "& button": {
       margin: "0 0.5rem",
-      [sizes.down("xs")]: {
+      [sizes.down("sm")]: {
         margin: "0",
         marginRight: "0.5rem",
         padding: "0.2rem"

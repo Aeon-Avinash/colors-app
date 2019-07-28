@@ -1,14 +1,21 @@
-import { DRAWER_WIDTH } from "./styleConstants";
+import { DRAWER_WIDTH, DRAWER_WIDTH_MOBILE } from "./styleConstants";
+import sizes from "./styleHelpers";
 
 const styles = theme => ({
   drawer: {
     width: DRAWER_WIDTH,
-    flexShrink: 0
+    flexShrink: 0,
+    [sizes.down("xs")]: {
+      width: DRAWER_WIDTH_MOBILE
+    }
   },
   drawerPaper: {
     width: DRAWER_WIDTH,
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    [sizes.down("xs")]: {
+      width: DRAWER_WIDTH_MOBILE
+    }
   },
   drawerHeader: {
     display: "flex",

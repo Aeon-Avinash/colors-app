@@ -1,3 +1,5 @@
+import sizes from "./styleHelpers";
+
 const styles = {
   root: {
     height: "100vh",
@@ -13,7 +15,16 @@ const styles = {
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "column",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    [sizes.down("xl")]: {
+      width: "80%"
+    },
+    [sizes.down("sm")]: {
+      width: "70%"
+    },
+    [sizes.down("xs")]: {
+      width: "75%"
+    }
   },
   nav: {
     color: "white",
@@ -27,7 +38,13 @@ const styles = {
     width: "100%",
     display: "grid",
     gridTemplateColumns: "repeat(3, 30%)",
-    gridGap: "5%"
+    gridGap: "5%",
+    [sizes.down("md")]: {
+      gridTemplateColumns: "repeat(2, 47.5%)"
+    },
+    [sizes.down("xs")]: {
+      gridTemplateColumns: "repeat(1, 100%)"
+    }
   },
   newLink: {
     color: "white",
