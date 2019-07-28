@@ -1,4 +1,5 @@
 import { DRAWER_WIDTH, APPBAR_HEIGHT } from "./styleConstants";
+import sizes from "./styleHelpers";
 
 const styles = theme => ({
   appBar: {
@@ -12,13 +13,9 @@ const styles = theme => ({
     justifyContent: "space-between",
     alignItems: "center"
   },
-  appButtons: {
-    margin: "0.5rem 1rem",
-    "& button": {
-      margin: "0 0.5rem"
-    },
-    "& a": {
-      textDecoration: "none"
+  formNavTitle: {
+    [sizes.down("xs")]: {
+      display: "none"
     }
   },
   appBarShift: {

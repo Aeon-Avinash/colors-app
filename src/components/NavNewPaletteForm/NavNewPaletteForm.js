@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/styles";
 import clsx from "clsx";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,10 +7,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
-import Button from "@material-ui/core/Button";
 
 import MetaNewPaletteForm from "../MetaNewPaletteForm/MetaNewPaletteForm";
 import styles from "../../styles/NavNewPaletteForm-styles";
+import AppBarButtons from "../AppBarButtons/AppBarButtons";
 
 class NewPaletteFormNav extends Component {
   constructor(props) {
@@ -74,24 +73,11 @@ class NewPaletteFormNav extends Component {
             >
               <AddToPhotosIcon />
             </IconButton>
-            <Typography variant="h6" noWrap>
+            <Typography className={classes.formNavTitle} variant="h6" noWrap>
               Create A Palette
             </Typography>
           </Toolbar>
-          <div className={classes.appButtons}>
-            <Link to="/">
-              <Button variant="contained" color="secondary">
-                Go Back
-              </Button>
-            </Link>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleOpenDialog}
-            >
-              Save Your New Palette
-            </Button>
-          </div>
+          <AppBarButtons handleOpenDialog={this.handleOpenDialog} />
         </AppBar>
         {(this.state.showFormDialog || this.state.showEmojiDialog) && (
           <MetaNewPaletteForm
