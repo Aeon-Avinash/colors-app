@@ -22,6 +22,7 @@ class NewPaletteFormNav extends Component {
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
     this.shiftDialogStage = this.shiftDialogStage.bind(this);
+    this.handleEmojiSelect = this.handleEmojiSelect.bind(this);
   }
 
   handleOpenDialog() {
@@ -42,6 +43,11 @@ class NewPaletteFormNav extends Component {
     });
   }
 
+  handleEmojiSelect(emojiVal) {
+    this.props.handleSubmitPalette(emojiVal);
+    this.handleCloseDialog();
+  }
+
   render() {
     const {
       classes,
@@ -49,7 +55,7 @@ class NewPaletteFormNav extends Component {
       stage,
       handleDrawerOpen,
       newPaletteName,
-      handleSubmitPalette,
+      // handleSubmitPalette,
       handleNameChange,
       palettes
     } = this.props;
@@ -85,7 +91,7 @@ class NewPaletteFormNav extends Component {
             showEmojiDialog={this.state.showEmojiDialog}
             stage={stage}
             handleCloseFormDialog={this.handleCloseDialog}
-            handleSubmitPalette={handleSubmitPalette}
+            handleEmojiSelect={this.handleEmojiSelect}
             showEmojiPicker={this.shiftDialogStage}
             handleNameChange={handleNameChange}
             newPaletteName={newPaletteName}

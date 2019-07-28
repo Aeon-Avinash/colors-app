@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import PaletteList from "./components/PaletteList/PaletteList";
 import Palette from "./components/Palette/Palette";
@@ -7,7 +7,7 @@ import SingleColorPalette from "./components/SingleColorPalette/SingleColorPalet
 import seedColors from "./seedColors";
 import { generatePalette } from "./colorHelpers";
 import NewPaletteForm from "./components/NewPaletteForm/NewPaletteForm";
-import "./App.css";
+import Page from "./components/Page/Page";
 
 class App extends Component {
   constructor(props) {
@@ -20,6 +20,7 @@ class App extends Component {
     this.savePaletteToList = this.savePaletteToList.bind(this);
     this.handleDeletePalette = this.handleDeletePalette.bind(this);
   }
+
   findPalette(id) {
     return this.state.palettes.find(palette => palette.id === id);
   }
@@ -47,32 +48,32 @@ class App extends Component {
         <Route
           render={({ location }) => (
             <TransitionGroup>
-              <CSSTransition key={location.key} classNames="fade" timeout={500}>
+              <CSSTransition key={location.key} classNames="page" timeout={500}>
                 <Switch location={location}>
                   <Route
                     exact
                     path="/"
                     render={routeProps => (
-                      <div className="page">
+                      <Page>
                         <PaletteList
                           palettes={this.state.palettes}
                           handleDelete={this.handleDeletePalette}
                           {...routeProps}
                         />
-                      </div>
+                      </Page>
                     )}
                   />
                   <Route
                     exact
                     path="/palette/new"
                     render={routeProps => (
-                      <div className="page">
+                      <Page>
                         <NewPaletteForm
                           {...routeProps}
                           savePalette={this.savePaletteToList}
                           palettes={this.state.palettes}
                         />
-                      </div>
+                      </Page>
                     )}
                   />
                   <Route
@@ -83,15 +84,15 @@ class App extends Component {
                       const paletteFound = this.findPalette(id);
                       if (paletteFound) {
                         return (
-                          <div className="page">
+                          <Page>
                             <Palette palette={generatePalette(paletteFound)} />
-                          </div>
+                          </Page>
                         );
                       } else {
                         return (
-                          <div className="page">
+                          <Page>
                             <h1>Palette not found!</h1>
-                          </div>
+                          </Page>
                         );
                       }
                     }}
@@ -110,24 +111,29 @@ class App extends Component {
 
                       if (paletteFound && singleColorPaletts) {
                         return (
-                          <div className="page">
+                          <Page>
                             <SingleColorPalette
                               palette={singleColorPaletts}
                               paletteId={paletteId}
                               emoji={paletteFound.emoji}
+                              {...routeProps}
                             />
-                          </div>
+                          </Page>
                         );
                       } else {
-                        return <h1>Palette not found!</h1>;
+                        return (
+                          <Page>
+                            <h1>Palette not found!</h1>
+                          </Page>
+                        );
                       }
                     }}
                   />
                   <Route
-                    render={() => (
-                      <div className="page">
+                    render={routeProps => (
+                      <Page>
                         <h1>Page not found!</h1>
-                      </div>
+                      </Page>
                     )}
                   />
                 </Switch>
@@ -140,4 +146,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

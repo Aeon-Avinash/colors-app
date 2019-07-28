@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/styles";
+import Button from "@material-ui/core/Button";
 import ColorBox from "../ColorBox/ColorBox";
 import Navbar from "../Navbar/Navbar";
 import PaletteFooter from "../PaletteFooter/PaletteFooter";
@@ -13,10 +14,15 @@ class SingleColorPalette extends Component {
       format: "hex"
     };
     this.handleFormatChange = this.handleFormatChange.bind(this);
+    this.gobackWithHistory = this.gobackWithHistory.bind(this);
   }
 
   handleFormatChange(format) {
     this.setState({ format });
+  }
+
+  gobackWithHistory() {
+    this.props.history.goBack();
   }
 
   render() {
@@ -39,9 +45,12 @@ class SingleColorPalette extends Component {
         <div className={classes.PaletteColors}>
           {colorBoxes}
           <div className={classes.goBack}>
-            <Link className={classes.backButton} to={`/palette/${paletteId}`}>
+            <Button
+              className={classes.backButton}
+              onClick={this.gobackWithHistory}
+            >
               Go Back
-            </Link>
+            </Button>
           </div>
         </div>
         <PaletteFooter colorId={colorId} paletteId={paletteId} emoji={emoji} />

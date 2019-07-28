@@ -37,7 +37,7 @@ const styles = {
   },
   backButton: {
     width: "100px",
-    height: "30px",
+    height: "40px",
     position: "absolute",
     display: "inline-block",
     top: "50%",

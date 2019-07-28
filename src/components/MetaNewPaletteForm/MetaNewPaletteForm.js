@@ -26,8 +26,8 @@ class MetaNewPaletteForm extends Component {
   render() {
     const { showFormDialog, showEmojiDialog } = this.props;
     const {
-      handleSubmitPalette,
       showEmojiPicker,
+      handleEmojiSelect,
       handleNameChange,
       newPaletteName,
       handleCloseFormDialog
@@ -38,7 +38,7 @@ class MetaNewPaletteForm extends Component {
           <DialogTitle id="form-dialog-title">
             Choose an Emoji for your Palette
           </DialogTitle>
-          <Picker onSelect={handleSubmitPalette} title="Palette loves Emoji" />
+          <Picker onSelect={handleEmojiSelect} title="Palette loves Emoji" />
         </Dialog>
         <Dialog
           open={showFormDialog}
