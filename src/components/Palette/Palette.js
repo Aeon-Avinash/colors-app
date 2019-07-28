@@ -36,6 +36,7 @@ class Palette extends Component {
         background={color[format]}
         name={color.name}
         showMoreLink={true}
+        showingFullPalette
       />
     ));
     return (

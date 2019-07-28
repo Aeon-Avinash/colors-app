@@ -50,7 +50,7 @@ class ColorBox extends Component {
             </div>
             <button className={classes.copyButton}>Copy</button>
           </div>
-          {!showingFullPalette && (
+          {showingFullPalette && (
             <Link
               to={`/palette/${paletteId}/${colorId}`}
               onClick={e => e.stopPropagation()}

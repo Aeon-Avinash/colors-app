@@ -1,9 +1,10 @@
 import chroma from "chroma-js";
+import sizes from "./styleHelpers";
 
 const styles = {
   ColorBox: {
     width: "20%",
-    height: props => (!props.showingFullPalette ? "25%" : "50%"),
+    height: props => (props.showingFullPalette ? "25%" : "50%"),
     margin: "0 auto",
     marginBottom: "-6px",
     display: "inline-block",
@@ -12,6 +13,18 @@ const styles = {
     "&:hover $copyButton": {
       opacity: "1",
       transition: "opacity 0.5s ease-in"
+    },
+    [sizes.down("lg")]: {
+      width: "25%",
+      height: props => (props.showingFullPalette ? "20%" : "33.33%")
+    },
+    [sizes.down("md")]: {
+      width: "50%",
+      height: props => (props.showingFullPalette ? "10%" : "20%")
+    },
+    [sizes.down("xs")]: {
+      width: "100%",
+      height: props => (props.showingFullPalette ? "5%" : "10%")
     }
   },
   // isLightColor: {
@@ -110,7 +123,10 @@ const styles = {
       textAlign: "center",
       marginBottom: "0",
       padding: "1rem",
-      textTransform: "uppercase"
+      textTransform: "uppercase",
+      [sizes.down("xs")]: {
+        fontSize: "6rem"
+      }
     },
     "& p": {
       fontSize: "2rem",
