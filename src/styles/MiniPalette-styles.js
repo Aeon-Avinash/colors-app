@@ -1,11 +1,21 @@
 const styles = {
+  // "@global": {
+  //   ".fade-exit": {
+  //     backgroundColor: "red",
+  //     opacity: 1
+  //   },
+  //   ".fade-exit-active": {
+  //     backgroundColor: "red",
+  //     opacity: 0,
+  //     transition: "opacity 5s ease-out"
+  //   }
+  // },
   root: {
     backgroundColor: "white",
     border: "solid 1px black",
     borderRadius: "5px",
     padding: "0.5rem",
     position: "relative",
-    overflow: "hidden",
     cursor: "pointer",
     "&:hover $deleteIcon": {
       opacity: 1

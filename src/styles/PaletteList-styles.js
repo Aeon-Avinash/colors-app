@@ -53,6 +53,15 @@ const styles = {
     },
     [sizes.down("xs")]: {
       gridTemplateColumns: "repeat(1, 100%)"
+    },
+    "@global": {
+      ".fade-exit": {
+        opacity: 1
+      },
+      ".fade-exit-active": {
+        opacity: 0,
+        transition: "opacity .5s ease-out"
+      }
     }
   },
   newLink: {
