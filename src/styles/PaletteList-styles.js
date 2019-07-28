@@ -1,4 +1,5 @@
 import sizes from "./styleHelpers";
+import bg from "./bg.svg";
 
 const styles = {
   root: {
@@ -6,8 +7,10 @@ const styles = {
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "center",
-    backgroundColor: "blue",
-    overflow: "auto"
+    overflow: "auto",
+    /* background by SVGBackgrounds.com */
+    backgroundColor: "#350eAA",
+    backgroundImage: `url(${bg})`
   },
   container: {
     width: "50%",
@@ -31,7 +34,13 @@ const styles = {
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    "& h1": {
+      fontSize: "2rem",
+      [sizes.down("xs")]: {
+        fontSize: "1.5rem"
+      }
+    }
   },
   palettes: {
     boxSizing: "border-box",
@@ -48,11 +57,15 @@ const styles = {
   },
   newLink: {
     color: "white",
+    fontSize: "1.5rem",
     textDecoration: "none",
     borderBottom: "1px solid grey",
     transition: "all ease-in-out 1s",
     "&:hover": {
       borderColor: "transparent"
+    },
+    [sizes.down("xs")]: {
+      fontSize: "1rem"
     }
   }
 };
