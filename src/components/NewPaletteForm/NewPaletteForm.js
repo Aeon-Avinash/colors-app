@@ -6,6 +6,7 @@ import DraggableColorList from "../../hocs/DraggableColorList/DraggableColorList
 import NavNewPaletteForm from "../NavNewPaletteForm/NavNewPaletteForm";
 import DrawerNewPaletteForm from "../DrawerNewPaletteForm/DrawerNewPaletteForm";
 import styles from "../../styles/NewPaletteForm-styles";
+import seedColors from "../../seedColors";
 
 class NewPaletteForm extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class NewPaletteForm extends Component {
     this.state = {
       openDrawer: false,
       currentColor: "#009688",
-      colors: this.props.palettes[0].colors,
+      colors: this.props.palettes[0].colors || seedColors[0].colors,
       newColorName: "",
       newPaletteName: ""
     };

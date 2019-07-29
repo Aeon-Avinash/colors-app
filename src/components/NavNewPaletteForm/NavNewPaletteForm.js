@@ -55,10 +55,10 @@ class NewPaletteFormNav extends Component {
       stage,
       handleDrawerOpen,
       newPaletteName,
-      // handleSubmitPalette,
       handleNameChange,
       palettes
     } = this.props;
+    const { showFormDialog, showEmojiDialog } = this.state;
     return (
       <>
         <CssBaseline />
@@ -85,10 +85,10 @@ class NewPaletteFormNav extends Component {
           </Toolbar>
           <AppBarButtons handleOpenDialog={this.handleOpenDialog} />
         </AppBar>
-        {(this.state.showFormDialog || this.state.showEmojiDialog) && (
+        {(showFormDialog || showEmojiDialog) && (
           <MetaNewPaletteForm
-            showFormDialog={this.state.showFormDialog}
-            showEmojiDialog={this.state.showEmojiDialog}
+            showFormDialog={showFormDialog}
+            showEmojiDialog={showEmojiDialog}
             stage={stage}
             handleCloseFormDialog={this.handleCloseDialog}
             handleEmojiSelect={this.handleEmojiSelect}
